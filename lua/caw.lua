@@ -34,7 +34,13 @@ function M.has_syntax(lnum, col)
       end
     end
   elseif vim.fn.has("nvim-0.8.0") == 1 and vim.fn.has("nvim-0.9.0") == 0 then
-    -- TODO: Implement
+    -- vim.treesitter.get_captures_at_pos using 0-based coordinate
+    local captures = vim.treesitter.get_captures_at_pos(bufnr, lnum - 1, col - 1)
+    for _, capture in ipairs(captures) do
+      if capture.capture == "comment" then
+        return true
+      end
+    end
   elseif vim.fn.has("nvim-0.9.0") == 1 then
     -- vim.inspect_pos using 0-based coordinate
     local items = vim.inspect_pos(bufnr, lnum - 1, col - 1)
