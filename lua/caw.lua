@@ -46,7 +46,7 @@ function M.has_syntax(lnum, col)
     local items = vim.inspect_pos(bufnr, lnum - 1, col - 1)
     if #items.treesitter > 0 then
       for _, capture in ipairs(items.treesitter) do
-        if capture.hl_group == "@comment" then
+        if capture.capture == "comment" then
           return true
         end
       end
